@@ -1,5 +1,5 @@
-const app = require("./app");
-const { connect } = require("./util/db");
+const app = require("./src/app");
+const { connect } = require("./src/util/db");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -13,8 +13,9 @@ const start = async () => {
   } catch (error) {
     console.error(error);
     process.exit(1);
-    
   }
 };
 
 start();
+
+module.exports = app;
