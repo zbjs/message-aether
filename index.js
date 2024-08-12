@@ -1,8 +1,11 @@
 const app = require("./src/app");
 const { connect } = require("./src/util/db");
 const dotenv = require("dotenv");
+const router = require("./src/routes");
 
 dotenv.config();
+
+app.use("/api", router);
 
 const start = async () => {
   try {

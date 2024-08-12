@@ -1,26 +1,14 @@
-const express = require("express");
-const router = express.Router();
+const Router = require("express").Router;
 
-router.get("/email", (req, res) => {
-  res.send("Hello email world");
-});
+const router = new Router();
+const authRouter = require("../modules/auth/auth.routes");
+const userRouter = require("../modules/user/user.routes");
+
+router.use("/auth", authRouter);
+router.use("/user", userRouter);
 
 router.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Hello world",
-    data: {
-      name: "Send Mailer",
-      version: "1.0.0",
-    },
-    error: {
-      code: 0,
-    },
-    status: 200,
-    timestamp: Date.now(),
-    env: process.env.NODE_ENV,
-    port: process.env.PORT,
-  });
+  res.status(200).json({ message: "Welcome to the API" });
 });
 
 module.exports = router;
