@@ -1,11 +1,15 @@
 const { z } = require("zod");
 
 const updateUserValidation = z.object({
+  fullname: z
+    .string()
+    .min(3, "Fullname must be at least 3 characters long")
+    .max(100, "Fullname must be at most 100 characters long"),
   username: z
     .string()
     .min(3, "Username must be at least 3 characters long")
     .max(20, "Username must be at most 20 characters long"),
-  role: z.enum(["user", "admin", "subadmin"]).default("user").optional(),
+  role: z.enum(["user", "admin"]).default("user").optional(),
   email: z
     .string()
     .min(3, "Email must be at least 3 characters long")

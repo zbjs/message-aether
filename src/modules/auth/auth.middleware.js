@@ -8,12 +8,14 @@ const verifyToken = (req, res, next) => {
     return res.status(401).json({ message: "No token provided" });
   }
 
-  // Verify the token
-  // If the token is invalid, an error will be thrown
-  // If the token is valid, the decoded token will be stored in `req.user`
+  // Verify the JWT token
+  const secret = process.env.JWT_SECRET || "your_jwt_secret";
 
-  jwt.verify(token, "your_jwt_secret", (err, decoded) => {
+  jwt.verify(token, secret, (err, decoded) => {
     if (err) {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "Token expired" });
+      }
       return res.status(401).json({ message: "Invalid token" });
     }
 

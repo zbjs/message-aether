@@ -10,7 +10,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login a user
+// Login a user controller
 exports.login = async (req, res) => {
   try {
     const token = await authService.loginUser(req.body);
@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// Logout a user
+// Logout a user controller
 exports.logout = async (req, res) => {
   try {
     await authService.logoutUser();
