@@ -31,6 +31,14 @@ class BlogController {
           .json({ success: false, message: validatedData.error.message });
       }
 
+      // Check if the blog already exists
+      const blog = await blogService.checkIfBlogExists(validatedData.data);
+      if (blog) {
+        return res
+          .status(409)
+          .json({ success: false, message: "Blog already exists" });
+      }
+
       // Call the service to create the blog
       const newBlog = await blogService.createBlog(validatedData.data);
 

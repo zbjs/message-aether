@@ -8,14 +8,34 @@ class BlogService {
     let bId;
 
     try {
+      // Get the next bId
       bId = await getNextBId();
       data.bId = bId;
       const blog = new Blog(data);
 
+      // Save the blog
       return await blog.save();
     } catch (error) {
       console.error("Error creating blog:", error);
       throw new Error("Error creating blog");
+    }
+  }
+
+  // check if blog exists all fields
+  async checkIfBlogExists(data) {
+    try {
+      const blog = await Blog.findOne({
+        $or: [
+          { title: data.title },
+          { description: data.description },
+          { "metadata.tags": data["metadata.tags"] },
+          { "metadata.category": data["metadata.category"] },
+        ],
+      });
+      return blog;
+    } catch (error) {
+      console.error("Error checking if blog exists:", error);
+      throw new Error("Error checking if blog exists");
     }
   }
 
@@ -104,19 +124,19 @@ class BlogService {
 
   // Delete a blog by id service
   async deleteBlog(bId) {
-     try {
-       // Find and delete the blog by bId
-       const deletedBlog = await Blog.findByIdAndDelete(bId);
+    try {
+      // Find and delete the blog by bId
+      const deletedBlog = await Blog.findByIdAndDelete(bId);
 
-       if (!deletedBlog) {
-         throw new Error("Blog not found");
-       }
+      if (!deletedBlog) {
+        throw new Error("Blog not found");
+      }
 
-       return deletedBlog;
-     } catch (error) {
-       console.error("Error deleting blog:", error);
-       throw new Error("Error deleting blog");
-     }
+      return deletedBlog;
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      throw new Error("Error deleting blog");
+    }
   }
 }
 
