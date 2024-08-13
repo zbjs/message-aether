@@ -66,5 +66,5 @@ const BlogSchema = new Schema(
   }
 );
 
-const Blog = model("Blog", BlogSchema);
+const Blog = model("Blogs", BlogSchema);
 module.exports = Blog;

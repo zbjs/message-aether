@@ -1,6 +1,7 @@
 const { z } = require("zod");
 
 exports.createCommentSchema = z.object({
+  author: z.string().min(1, "Author is required"),
   blogId: z
     .string()
     .min(1, "Blog ID is required")

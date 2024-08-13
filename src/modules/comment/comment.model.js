@@ -2,12 +2,6 @@ const { Schema, model } = require("mongoose");
 
 const commentSchema = new Schema(
   {
-    cId: {
-      type: Number,
-      default: 0,
-      unique: true,
-      required: true,
-    },
     author: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -29,7 +23,6 @@ const commentSchema = new Schema(
       {
         author: {
           type: Schema.Types.ObjectId,
-          required: true,
           ref: "Users",
         },
         comment: {
@@ -39,18 +32,11 @@ const commentSchema = new Schema(
         code: {
           type: String,
         },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
       },
     ],
   },
   {
     timestamps: true,
-    toJSON: {
-      virtuals: true,
-    },
   }
 );
 
