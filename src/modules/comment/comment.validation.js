@@ -1,38 +1,15 @@
 const { z } = require("zod");
 
-const createCommentSchema = z.object({
-  cId: z.number().optional().default(0),
-  author: z.object({
-    id: z.string(),
-    username: z.string(),
-    fullname: z.string(),
-  }),
-  blogId: z.number(),
-  description: z
+exports.createCommentSchema = z.object({
+  blogId: z
     .string()
-    .min(1, "Description is required")
-    .max(24500, "Description is too long"),
-  code: z.string().optional(),
-  image: z.string().optional(),
-  url: z.string().optional(),
-  metadata: z
-    .object({
-      tags: z.array(z.string()).optional(),
-      category: z.array(z.string()).optional(),
-    })
-    .optional(),
-  permissions: z
-    .object({
-      read: z.boolean().optional().default(true),
-      write: z.boolean().optional().default(true),
-      delete: z.boolean().optional().default(true),
-      update: z.boolean().optional().default(true),
-      create: z.boolean().optional().default(true),
-      admin: z.boolean().optional().default(false),
-    })
-    .optional(),
+    .min(1, "Blog ID is required")
+    .length(24, "Invalid Blog ID format"), // assuming ObjectId length is 24
+  comment: z.string().min(1, "Comment is required"),
+  code: z.string().optional(), // code is optional
 });
 
-exports.createCommentSchema = createCommentSchema;
-
-exports.createComment = (data) => createCommentSchema.safeParse(data);
+exports.replyToCommentSchema = z.object({
+  comment: z.string().min(1, "Reply comment is required"),
+  code: z.string().optional(), // code is optional
+});

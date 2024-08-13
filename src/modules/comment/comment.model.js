@@ -1,36 +1,58 @@
 const { Schema, model } = require("mongoose");
 
-const CommentSchema = new Schema({
-  cId: {
-    type: Number,
-    default: 0,
-    unique: true,
-    required: true,
+const commentSchema = new Schema(
+  {
+    cId: {
+      type: Number,
+      default: 0,
+      unique: true,
+      required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Users",
+    },
+    blogId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Blogs",
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+    code: {
+      type: String,
+    },
+    replies: [
+      {
+        author: {
+          type: Schema.Types.ObjectId,
+          required: true,
+          ref: "Users",
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+        code: {
+          type: String,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
-  author: {
-    type: Object,
-    required: true,
-  },
-  blogId: {
-    type: Number,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  code: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-  url: {
-    type: String,
-  },
-  metadata: {
-    type: Object,
-  },
-});
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
-module.exports = model("Comment", CommentSchema);
+const Comment = model("Comment", commentSchema);
+module.exports = Comment;
