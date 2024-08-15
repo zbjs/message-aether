@@ -102,13 +102,14 @@ class BlogService {
     }
   }
   // Update a blog by id service
+
   async updateBlog(bId, updateData) {
     try {
-      // Find and update the blog by bId
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        bId,
+      // Find the blog by bId (string) and update it
+      const updatedBlog = await Blog.findOneAndUpdate(
+        { bId: bId }, // Query using bId as a string
         { $set: updateData },
-        { new: true, runValidators: true } // Return the updated document and validate
+        { new: true, runValidators: true } // Return the updated document and validate before saving
       );
 
       if (!updatedBlog) {
@@ -123,10 +124,10 @@ class BlogService {
   }
 
   // Delete a blog by id service
-  async deleteBlog(bId) {
+  async deleteBlogById(bId) {
     try {
-      // Find and delete the blog by bId
-      const deletedBlog = await Blog.findByIdAndDelete(bId);
+      // Find the blog by bId and delete it
+      const deletedBlog = await Blog.findOneAndDelete({ bId: bId });
 
       if (!deletedBlog) {
         throw new Error("Blog not found");

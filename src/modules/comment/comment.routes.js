@@ -10,8 +10,8 @@ const {
 } = require("./comment.controller");
 
 // Ensure middleware is applied for token verification
-commentRouter.post("/add", addComment);
-commentRouter.post("/reply/:commentId", replyToComment);
-commentRouter.get("/:blogId", getCommentsByBlogId);
+commentRouter.post("/add", verifyToken, addComment);
+commentRouter.post("/reply/:commentId", verifyToken, replyToComment);
+commentRouter.get("/:blogId", verifyToken, getCommentsByBlogId);
 
 module.exports = commentRouter;

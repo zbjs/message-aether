@@ -109,13 +109,14 @@ class BlogController {
     }
   }
 
+  // Update a blog controller
   async updateBlog(req, res) {
     try {
-      const bId = req.params.id;
+      const bId = req.params.id; // Assuming the bId is passed as a URL parameter
       const updateData = req.body;
 
       // Update the blog using the service
-      const updatedBlog = await blogService.updateBlogById(bId, updateData);
+      const updatedBlog = await blogService.updateBlog(bId, updateData);
 
       return res.status(200).json({
         success: true,
@@ -123,13 +124,15 @@ class BlogController {
         data: updatedBlog,
       });
     } catch (error) {
+      console.error("Update blog error:", error);
       return res.status(500).json({ success: false, message: error.message });
     }
   }
 
+  // Delete a blog controller
   async deleteBlog(req, res) {
     try {
-      const bId = req.params.id;
+      const bId = req.params.id; // Assuming the bId is passed as a URL parameter
 
       // Delete the blog using the service
       const deletedBlog = await blogService.deleteBlogById(bId);
@@ -140,6 +143,7 @@ class BlogController {
         data: deletedBlog,
       });
     } catch (error) {
+      console.error("Delete blog error:", error);
       return res.status(500).json({ success: false, message: error.message });
     }
   }
