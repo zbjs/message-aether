@@ -24,10 +24,10 @@ exports.loginUser = async (loginData) => {
   }
 
   // Define the JWT secret and expiration time
-  const secret = process.env.JWT_SECRET || "your_jwt_secret";
-  const expiresIn = "1h"; // Token will expire in 1 hour
+  const secret = process.env.JWT_SECRET;
+  const expiresIn = "2h"; // Token will expire in 2 hour
 
-  // Generate the JWT token with the user's ID, email, and role
+  // Generate the JWT token with the user's information
   const token = jwt.sign(
     {
       id: user._id,
@@ -35,6 +35,17 @@ exports.loginUser = async (loginData) => {
       username: user.username,
       email: user.email,
       role: user.role,
+      avatar_url: user.avatar_url,
+      html_url: user.html_url,
+      bio: user.bio,
+      location: user.location,
+      linkedin_url: user.linkedin_url,
+      twitter_url: user.twitter_url,
+      website_url: user.website_url,
+      followers: user.followers,
+      following: user.following,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     },
     secret,
     { expiresIn }
@@ -106,9 +117,6 @@ exports.getUsers = async (page = 1, limit = 10, searchQuery = "") => {
     users,
   };
 };
-
-// Change password service
-const bcrypt = require("bcryptjs");
 
 // Validate the password for a specific user
 exports.validatePassword = async (userId, password) => {

@@ -43,7 +43,8 @@ const UserSchema = new mongoose.Schema(
     },
     avatar_url: {
       type: String,
-      default: "",
+      default:
+        "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
     },
     html_url: {
       type: String,
@@ -61,21 +62,21 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    twitter_username: {
+    twitter_url: {
       type: String,
       default: "",
     },
     website_url: {
       type: String,
-      default: "",
+      default: "https://zobkazi.github.io/",
     },
-    followers_url: {
+    followers: {
       type: String,
-      default: "",
+      default: "100",
     },
-    following_url: {
+    following: {
       type: String,
-      default: "",
+      default: "123",
     },
   },
   {
