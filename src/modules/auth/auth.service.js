@@ -18,8 +18,11 @@ exports.registerUser = async (userData) => {
 // Login a user service method
 exports.loginUser = async (loginData) => {
   // Find user, validate password, generate JWT token
-  const user = await User.findOne({ email: loginData.email });
-  if (!user || (await !user.validatePassword(loginData.password))) {
+  const user = await User.findOne({
+    email: loginData.email,
+  });
+  // Check if user exists and validate password
+  if (!user || !(await user.validatePassword(loginData.password))) {
     throw new Error("Invalid credentials");
   }
 
